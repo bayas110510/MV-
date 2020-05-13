@@ -122,7 +122,7 @@ export const constantRoutes = [
     name: '名人管理',
     meta: {
       title: '名人管理',
-      icon: 'dashboard'
+      icon: 'peoples'
       // roles: ['admin', 'editor'] // you can set roles in root nav
     },
     children: [
