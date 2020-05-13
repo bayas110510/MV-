@@ -1,13 +1,6 @@
 
 <template>
   <div class="app-container">
-    <el-input
-      v-model="input"
-      style="margin:0 0 20px 20px; width:300px;"
-      placeholder="请输入内容"
-      clearable
-    />
-    <el-button style="margin:0 0 10px 10px;" type="success">成功按钮</el-button>
     <el-card>
       <el-table
         v-loading="listLoading"
@@ -16,10 +9,25 @@
         stripe
         style="width: 100%"
       >
-        <el-table-column prop="date" label="日期" width="180" />
-        <el-table-column prop="name" label="姓名" width="180" />
-        <el-table-column prop="address" label="地址" />
+        <el-table-column prop="date" label="栏目编码" width="100" />
+        <el-table-column prop="date" label="栏目名称" width="140" />
+        <el-table-column prop="date" label="栏目名称（蒙语）" width="140" />
+        <el-table-column prop="date" label="是否导航" width="100" />
+        <el-table-column prop="date" label="是否专题" width="100" />
+        <el-table-column prop="date" label="是否启用" width="100" />
+        <el-table-column prop="date" label="链接地址" width="140" />
+        <el-table-column prop="date" label="内容页" width="140" />
+        <el-table-column prop="date" label="打开方式" width="100" />
+        <el-table-column prop="date" label="导航类型" width="100" />
+        <el-table-column prop="date" label="备注" width="140" />
+        <el-table-column prop="date" label="有效" width="100" />
+        <el-table-column prop="date" label="默认行数" width="100" />
+        <el-table-column prop="date" label="排序码" width="100" />
+        <el-table-column prop="date" label="创建用户" width="100" />
+        <el-table-column prop="date" label="排序码" width="140" />
+        <el-table-column prop="name" label="创建时间" width="140" />
       </el-table>
     </el-card>
   </div>
 </template>
+

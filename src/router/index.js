@@ -113,6 +113,47 @@ export const constantRoutes = [
         }
       }
     ]
+  },
+  {
+    path: '/celebrity',
+    component: Layout,
+    // redirect: '/administrate/index',
+    alwaysShow: true, // will always show the root menu
+    name: '名人管理',
+    meta: {
+      title: '名人管理',
+      icon: 'dashboard'
+      // roles: ['admin', 'editor'] // you can set roles in root nav
+    },
+    children: [
+      {
+        path: 'maintenance',
+        component: () => import('@/views/celebrity/components/maintenance'),
+        name: '名人维护',
+        meta: {
+          title: '名人维护',
+          roles: ['admin'] // or you can only set roles in sub nav
+        }
+      },
+      {
+        path: 'auditing',
+        component: () => import('@/views/celebrity/components/auditing'),
+        name: '名人审核',
+        meta: {
+          title: '名人审核',
+          roles: ['admin'] // or you can only set roles in sub nav
+        }
+      },
+      {
+        path: 'deleteContent',
+        component: () => import('@/views/celebrity/components/deleteContent'),
+        name: '删除内容',
+        meta: {
+          title: '删除内容',
+          roles: ['admin'] // or you can only set roles in sub nav
+        }
+      }
+    ]
   }
   // {
   //   path: '/auth-redirect',
@@ -322,7 +363,6 @@ export const asyncRoutes = [
       }
     ]
   },
-
   // {
   //   path: '/tab',
   //   component: Layout,
