@@ -54,7 +54,57 @@ export default {
     return {
       listLoading: true,
       input: '',
-      tableData: null,
+      // tableData: null,
+      tableData: [{
+        Response: {
+          RequestId: '5bb36159-0f68-4f31-b8a8-bac0a85bffc7',
+          AllCount: 3,
+          DomainList: [
+            {
+              Name: 'push.tib1206.com',
+              Type: 0,
+              Status: 1,
+              PlayType: 1,
+              IsDelayLive: 0,
+              IsMiniProgramLive: 0,
+              CreateTime: '2020-05-01 11:12:25',
+              BCName: 1,
+              CurrentCName: 'push.tib1206.com.livepush.myqcloud.com',
+              TargetDomain: 'push.tib1206.com.livepush.myqcloud.com',
+              RentTag: 0,
+              RentExpireTime: '-'
+            },
+            {
+              Name: 'play.tib1206.com',
+              Type: 1,
+              Status: 1,
+              PlayType: 1,
+              IsDelayLive: 0,
+              IsMiniProgramLive: 0,
+              CreateTime: '2020-05-01 11:02:37',
+              BCName: 1,
+              CurrentCName: 'play.tib1206.com.livecdn.liveplay.myqcloud.com',
+              TargetDomain: 'play.tib1206.com.livecdn.liveplay.myqcloud.com',
+              RentTag: 0,
+              RentExpireTime: '-'
+            },
+            {
+              Name: '95437.livepush.myqcloud.com',
+              Type: 0,
+              Status: 0,
+              PlayType: 0,
+              IsDelayLive: 0,
+              IsMiniProgramLive: 0,
+              CreateTime: '2020-04-30 15:47:18',
+              BCName: 1,
+              CurrentCName: '95437.livepush.myqcloud.com',
+              TargetDomain: '95437.livepush.myqcloud.com',
+              RentTag: 0,
+              RentExpireTime: '-'
+            }
+          ]
+        }
+      }],
       postData: {
         Response: {
           OnlineInfo: [
@@ -85,8 +135,57 @@ export default {
     fetchData() {
       this.listLoading = true
       fetchList(this.postData).then(response => {
-        this.tableData = response.data.Response.DomainList
-        console.log('bayas:', this.tableData)
+        // this.tableData = response.data.Response.DomainList
+        this.tableData = [{
+          Response: {
+            RequestId: '5bb36159-0f68-4f31-b8a8-bac0a85bffc7',
+            AllCount: 3,
+            DomainList: [
+              {
+                Name: 'push.tib1206.com',
+                Type: 0,
+                Status: 1,
+                PlayType: 1,
+                IsDelayLive: 0,
+                IsMiniProgramLive: 0,
+                CreateTime: '2020-05-01 11:12:25',
+                BCName: 1,
+                CurrentCName: 'push.tib1206.com.livepush.myqcloud.com',
+                TargetDomain: 'push.tib1206.com.livepush.myqcloud.com',
+                RentTag: 0,
+                RentExpireTime: '-'
+              },
+              {
+                Name: 'play.tib1206.com',
+                Type: 1,
+                Status: 1,
+                PlayType: 1,
+                IsDelayLive: 0,
+                IsMiniProgramLive: 0,
+                CreateTime: '2020-05-01 11:02:37',
+                BCName: 1,
+                CurrentCName: 'play.tib1206.com.livecdn.liveplay.myqcloud.com',
+                TargetDomain: 'play.tib1206.com.livecdn.liveplay.myqcloud.com',
+                RentTag: 0,
+                RentExpireTime: '-'
+              },
+              {
+                Name: '95437.livepush.myqcloud.com',
+                Type: 0,
+                Status: 0,
+                PlayType: 0,
+                IsDelayLive: 0,
+                IsMiniProgramLive: 0,
+                CreateTime: '2020-04-30 15:47:18',
+                BCName: 1,
+                CurrentCName: '95437.livepush.myqcloud.com',
+                TargetDomain: '95437.livepush.myqcloud.com',
+                RentTag: 0,
+                RentExpireTime: '-'
+              }
+            ]
+          }
+        }]
         this.listLoading = false
       })
       this.listLoading = false
@@ -138,9 +237,9 @@ export default {
     statusFormatter(row, column) {
       const status = row.Status
       if (status === 0) {
-        return '停用'
+        return '已停用'
       } else {
-        return '启用'
+        return '已启用'
       }
     },
     getSortClass: function(key) {
