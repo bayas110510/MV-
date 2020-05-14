@@ -152,6 +152,15 @@ export const constantRoutes = [
           title: '删除内容',
           roles: ['admin'] // or you can only set roles in sub nav
         }
+      },
+      {
+        path: 'view',
+        component: () => import('@/views/celebrity/components/view'),
+        name: '名人查看',
+        meta: {
+          title: '名人查看',
+          roles: ['admin'] // or you can only set roles in sub nav
+        }
       }
     ]
   },
