@@ -39,17 +39,17 @@ import nestedRouter from './modules/nested'
  * all roles can be accessed
  */
 export const constantRoutes = [
-  // {
-  //   path: '/redirect',
-  //   component: Layout,
-  //   hidden: true,
-  //   children: [
-  //     {
-  //       path: '/redirect/:path*',
-  //       component: () => import('@/views/redirect/index')
-  //     }
-  //   ]
-  // },
+  {
+    path: '/redirect',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: '/redirect/:path*',
+        component: () => import('@/views/redirect/index')
+      }
+    ]
+  },
   {
     path: '/login',
     component: () => import('@/views/login/index'),
@@ -154,7 +154,7 @@ export const constantRoutes = [
         }
       }
     ]
-  }
+  },
   // {
   //   path: '/auth-redirect',
   //   component: () => import('@/views/login/auth-redirect'),
@@ -194,7 +194,7 @@ export const constantRoutes = [
   //       meta: { title: 'documentation', icon: 'documentation', affix: true }
   //     }
   //   ]
-  // }
+  // },
   // {
   //   path: '/guide',
   //   component: Layout,
@@ -208,20 +208,20 @@ export const constantRoutes = [
   //     }
   //   ]
   // },
-  // {
-  //   path: '/profile',
-  //   component: Layout,
-  //   redirect: '/profile/index',
-  //   hidden: true,
-  //   children: [
-  //     {
-  //       path: 'index',
-  //       component: () => import('@/views/profile/index'),
-  //       name: 'Profile',
-  //       meta: { title: 'profile', icon: 'user', noCache: true }
-  //     }
-  //   ]
-  // }
+  {
+    path: '/profile',
+    component: Layout,
+    redirect: '/profile/index',
+    hidden: true,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/profile/index'),
+        name: 'Profile',
+        meta: { title: 'profile', icon: 'user', noCache: true }
+      }
+    ]
+  }
 ]
 
 /**
