@@ -86,6 +86,7 @@ export default {
       this.listLoading = true
       fetchList(this.postData).then(response => {
         this.tableData = response.data.Response.DomainList
+        console.log('bayas:', this.tableData)
         this.listLoading = false
       })
       this.listLoading = false
