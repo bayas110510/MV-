@@ -241,7 +241,7 @@ export const asyncRoutes = [
   {
     path: '/domain',
     component: Layout,
-    redirect: '@/views/live_domain/index',
+    redirect: '@/views/live/live_domain/index',
     alwaysShow: true, // will always show the root menu
     name: '域名管理',
     meta: {
@@ -252,7 +252,7 @@ export const asyncRoutes = [
     children: [
       {
         path: 'domainslist',
-        component: () => import('@/views/live_domain/index'),
+        component: () => import('@/views/live/live_domain/index'),
         name: '域名列表',
         meta: {
           title: '域名列表',
