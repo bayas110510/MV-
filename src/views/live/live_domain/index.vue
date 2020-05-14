@@ -34,9 +34,9 @@
             <el-button v-if="row.status!='published'" size="mini" type="success" @click="handleModifyStatus(row,'0')">
               {{ $t('table.publish') }}
             </el-button>
-            <el-button v-if="row.status!='draft'" size="mini" @click="handleModifyStatus(row,'1')">
+            <!-- <el-button v-if="row.status!='draft'" size="mini" @click="handleModifyStatus(row,'1')">
               {{ $t('table.draft') }}
-            </el-button>
+            </el-button> -->
             <el-button v-if="row.status!='deleted'" size="mini" type="danger" @click="handleDelete(row,$index)">
               {{ $t('table.delete') }}
             </el-button>
@@ -48,146 +48,74 @@
 </template>
 
 <script>
-import { fetchList } from '@/api/domain'
+// import { fetchList } from '@/api/domain'
 export default {
   data() {
     return {
       listLoading: true,
       input: '',
       // tableData: null,
-      tableData: [{
-        Response: {
-          RequestId: '5bb36159-0f68-4f31-b8a8-bac0a85bffc7',
-          AllCount: 3,
-          DomainList: [
-            {
-              Name: 'push.tib1206.com',
-              Type: 0,
-              Status: 1,
-              PlayType: 1,
-              IsDelayLive: 0,
-              IsMiniProgramLive: 0,
-              CreateTime: '2020-05-01 11:12:25',
-              BCName: 1,
-              CurrentCName: 'push.tib1206.com.livepush.myqcloud.com',
-              TargetDomain: 'push.tib1206.com.livepush.myqcloud.com',
-              RentTag: 0,
-              RentExpireTime: '-'
-            },
-            {
-              Name: 'play.tib1206.com',
-              Type: 1,
-              Status: 1,
-              PlayType: 1,
-              IsDelayLive: 0,
-              IsMiniProgramLive: 0,
-              CreateTime: '2020-05-01 11:02:37',
-              BCName: 1,
-              CurrentCName: 'play.tib1206.com.livecdn.liveplay.myqcloud.com',
-              TargetDomain: 'play.tib1206.com.livecdn.liveplay.myqcloud.com',
-              RentTag: 0,
-              RentExpireTime: '-'
-            },
-            {
-              Name: '95437.livepush.myqcloud.com',
-              Type: 0,
-              Status: 0,
-              PlayType: 0,
-              IsDelayLive: 0,
-              IsMiniProgramLive: 0,
-              CreateTime: '2020-04-30 15:47:18',
-              BCName: 1,
-              CurrentCName: '95437.livepush.myqcloud.com',
-              TargetDomain: '95437.livepush.myqcloud.com',
-              RentTag: 0,
-              RentExpireTime: '-'
-            }
-          ]
-        }
-      }],
-      postData: {
-        Response: {
-          OnlineInfo: [
-            {
-              StreamName: '5000_abcdefg',
-              AppName: 'live',
-              DomainName: '5000.livepush.myqcloud.com',
-              PublishTimeList: [
-                {
-                  PublishTime: '2017-10-24T12:00:00Z'
-                }
-              ]
-            }
-          ],
-          TotalNum: 1,
-          TotalPage: 1,
-          PageNum: 1,
-          PageSize: 10,
-          RequestId: '8e50cdb5-56dc-408b-89b0-31818958d424'
-        }
-      }
+      tableData: null
     }
   },
   created() {
+    console.log('0000000000000000000000000000')
     this.fetchData()
   },
   methods: {
     fetchData() {
       this.listLoading = true
-      fetchList(this.postData).then(response => {
-        // this.tableData = response.data.Response.DomainList
-        this.tableData = [{
-          Response: {
-            RequestId: '5bb36159-0f68-4f31-b8a8-bac0a85bffc7',
-            AllCount: 3,
-            DomainList: [
-              {
-                Name: 'push.tib1206.com',
-                Type: 0,
-                Status: 1,
-                PlayType: 1,
-                IsDelayLive: 0,
-                IsMiniProgramLive: 0,
-                CreateTime: '2020-05-01 11:12:25',
-                BCName: 1,
-                CurrentCName: 'push.tib1206.com.livepush.myqcloud.com',
-                TargetDomain: 'push.tib1206.com.livepush.myqcloud.com',
-                RentTag: 0,
-                RentExpireTime: '-'
-              },
-              {
-                Name: 'play.tib1206.com',
-                Type: 1,
-                Status: 1,
-                PlayType: 1,
-                IsDelayLive: 0,
-                IsMiniProgramLive: 0,
-                CreateTime: '2020-05-01 11:02:37',
-                BCName: 1,
-                CurrentCName: 'play.tib1206.com.livecdn.liveplay.myqcloud.com',
-                TargetDomain: 'play.tib1206.com.livecdn.liveplay.myqcloud.com',
-                RentTag: 0,
-                RentExpireTime: '-'
-              },
-              {
-                Name: '95437.livepush.myqcloud.com',
-                Type: 0,
-                Status: 0,
-                PlayType: 0,
-                IsDelayLive: 0,
-                IsMiniProgramLive: 0,
-                CreateTime: '2020-04-30 15:47:18',
-                BCName: 1,
-                CurrentCName: '95437.livepush.myqcloud.com',
-                TargetDomain: '95437.livepush.myqcloud.com',
-                RentTag: 0,
-                RentExpireTime: '-'
-              }
-            ]
-          }
-        }]
-        this.listLoading = false
-      })
+      // fetchList(this.postData).then(response => {
+      //   // this.tableData = response.data.Response.DomainList
+      //   this.listLoading = false
+      // })
+      console.log('11111111111+++++++++++++++++11111111111111')
+      this.tableData = [
+        {
+          Name: 'push.tib1206.com',
+          Type: 0,
+          Status: 1,
+          PlayType: 1,
+          IsDelayLive: 0,
+          IsMiniProgramLive: 0,
+          CreateTime: '2020-05-01 11:12:25',
+          BCName: 1,
+          CurrentCName: 'push.tib1206.com.livepush.myqcloud.com',
+          TargetDomain: 'push.tib1206.com.livepush.myqcloud.com',
+          RentTag: 0,
+          RentExpireTime: '-'
+        },
+        {
+          Name: 'play.tib1206.com',
+          Type: 1,
+          Status: 1,
+          PlayType: 1,
+          IsDelayLive: 0,
+          IsMiniProgramLive: 0,
+          CreateTime: '2020-05-01 11:02:37',
+          BCName: 1,
+          CurrentCName: 'play.tib1206.com.livecdn.liveplay.myqcloud.com',
+          TargetDomain: 'play.tib1206.com.livecdn.liveplay.myqcloud.com',
+          RentTag: 0,
+          RentExpireTime: '-'
+        },
+        {
+          Name: '95437.livepush.myqcloud.com',
+          Type: 0,
+          Status: 0,
+          PlayType: 0,
+          IsDelayLive: 0,
+          IsMiniProgramLive: 0,
+          CreateTime: '2020-04-30 15:47:18',
+          BCName: 1,
+          CurrentCName: '95437.livepush.myqcloud.com',
+          TargetDomain: '95437.livepush.myqcloud.com',
+          RentTag: 0,
+          RentExpireTime: '-'
+        }
+      ]
+      console.log('33333333333333333333333333333')
+      console.log(this.tableData)
       this.listLoading = false
     },
     handleUpdate(row) {
@@ -214,6 +142,7 @@ export default {
         duration: 2000
       })
       this.list.splice(index, 1)
+      console.log('点击了删除按钮')
     },
     // 类型
     typeFormatter(row, column) {
@@ -237,9 +166,9 @@ export default {
     statusFormatter(row, column) {
       const status = row.Status
       if (status === 0) {
-        return '已停用'
+        return '停用'
       } else {
-        return '已启用'
+        return '启用'
       }
     },
     getSortClass: function(key) {
