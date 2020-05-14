@@ -239,6 +239,47 @@ export const constantRoutes = [
  */
 export const asyncRoutes = [
   {
+    path: '/domain',
+    component: Layout,
+    redirect: '@/views/live_domain/index',
+    alwaysShow: true, // will always show the root menu
+    name: '域名管理',
+    meta: {
+      title: '域名管理',
+      icon: 'lock',
+      roles: ['admin', 'editor'] // you can set roles in root nav
+    },
+    children: [
+      {
+        path: 'domainslist',
+        component: () => import('@/views/live_domain/index'),
+        name: '域名列表',
+        meta: {
+          title: '域名列表',
+          roles: ['admin'] // or you can only set roles in sub nav
+        }
+      },
+      {
+        path: 'live',
+        component: () => import('@/views/permission/directive'),
+        name: '查询统计',
+        meta: {
+          title: '查询统计'
+          // if do not set roles, means: this page does not require permission
+        }
+      },
+      {
+        path: 'live1',
+        component: () => import('@/views/permission/role'),
+        name: 'RolePermission',
+        meta: {
+          title: 'rolePermission',
+          roles: ['admin']
+        }
+      }
+    ]
+  },
+  {
     path: '/live',
     component: Layout,
     redirect: '/live/livestream/index',
