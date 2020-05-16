@@ -260,6 +260,15 @@ export const asyncRoutes = [
         }
       },
       {
+        path: 'demo',
+        component: () => import('@/views/live/live_domain/demo'),
+        name: 'demo',
+        meta: {
+          title: 'demo',
+          roles: ['admin'] // or you can only set roles in sub nav
+        }
+      },
+      {
         path: 'live',
         component: () => import('@/views/permission/directive'),
         name: '查询统计',

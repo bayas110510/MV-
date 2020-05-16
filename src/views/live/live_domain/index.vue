@@ -12,6 +12,7 @@
     </el-button>
     <el-card>
       <el-table
+        :key="tableKey"
         v-loading="listLoading"
         :data="tableData"
         element-loading-text="Loading..."
@@ -22,7 +23,13 @@
         <el-table-column prop="CurrentCName" label="CNAME" />
         <el-table-column prop="Type" :formatter="typeFormatter" label="类型" />
         <el-table-column prop="IsMiniProgramLive" :formatter="liveFormatter" label="场景" />
-        <el-table-column prop="Status" :formatter="statusFormatter" label="状态" />
+        <el-table-column prop="Status" :formatter="statusFormatter" label="状态" class-name="status-col">
+          <template slot-scope="{row}">
+            <el-tag :type="row.status">
+              {{ row.status }}
+            </el-tag>
+          </template>
+        </el-table-column>
         <el-table-column prop="CreateTime" label="开始时间" />
         <el-table-column prop="RentExpireTime" label="过期时间" />
 
@@ -31,12 +38,12 @@
             <el-button type="primary" size="mini" @click="handleUpdate(row)">
               {{ $t('table.edit') }}
             </el-button>
-            <el-button v-if="row.status!='published'" size="mini" type="success" @click="handleModifyStatus(row,'0')">
+            <el-button v-if="row.status!='published'" size="mini" type="success" @click="handleModifyStatus(row,'published')">
               {{ $t('table.publish') }}
             </el-button>
-            <!-- <el-button v-if="row.status!='draft'" size="mini" @click="handleModifyStatus(row,'1')">
+            <el-button v-if="row.status!='draft'" size="mini" @click="handleModifyStatus(row,'draft')">
               {{ $t('table.draft') }}
-            </el-button> -->
+            </el-button>
             <el-button v-if="row.status!='deleted'" size="mini" type="danger" @click="handleDelete(row,$index)">
               {{ $t('table.delete') }}
             </el-button>
@@ -48,18 +55,70 @@
 </template>
 
 <script>
+
 // import { fetchList } from '@/api/domain'
+const calendarTypeOptions = [
+  { key: 'CN', display_name: 'China' },
+  { key: 'US', display_name: 'USA' },
+  { key: 'JP', display_name: 'Japan' },
+  { key: 'EU', display_name: 'Eurozone' }
+]
+
+const calendarTypeKeyValue = calendarTypeOptions.reduce((acc, cur) => {
+  acc[cur.key] = cur.display_name
+  return acc
+}, {})
 export default {
   data() {
     return {
+      name: 'ComplexTable',
+      filters: {
+        statusFilter(status) {
+          const statusMap = {
+            published: 'success',
+            draft: 'info',
+            deleted: 'danger'
+          }
+          return statusMap[status]
+        },
+        typeFilter(type) {
+          return calendarTypeKeyValue[type]
+        }
+      },
       listLoading: true,
       input: '',
       // tableData: null,
-      tableData: null
+      tableData: null,
+      importanceOptions: [1, 2, 3],
+      calendarTypeOptions,
+      sortOptions: [{ label: 'ID Ascending', key: '+id' }, { label: 'ID Descending', key: '-id' }],
+      statusOptions: ['published', 'draft', 'deleted'],
+      showReviewer: false,
+      temp: {
+        id: undefined,
+        importance: 1,
+        remark: '',
+        timestamp: new Date(),
+        title: '',
+        type: '',
+        status: 'published'
+      },
+      dialogFormVisible: false,
+      dialogStatus: '',
+      textMap: {
+        update: 'Edit',
+        create: 'Create'
+      },
+      dialogPvVisible: false,
+      pvData: [],
+      rules: {
+        type: [{ required: true, message: 'type is required', trigger: 'change' }],
+        timestamp: [{ type: 'date', required: true, message: 'timestamp is required', trigger: 'change' }],
+        title: [{ required: true, message: 'title is required', trigger: 'blur' }]
+      }
     }
   },
   created() {
-    console.log('0000000000000000000000000000')
     this.fetchData()
   },
   methods: {
@@ -69,7 +128,6 @@ export default {
       //   // this.tableData = response.data.Response.DomainList
       //   this.listLoading = false
       // })
-      console.log('11111111111+++++++++++++++++11111111111111')
       this.tableData = [
         {
           Name: 'push.tib1206.com',
@@ -114,8 +172,6 @@ export default {
           RentExpireTime: '-'
         }
       ]
-      console.log('33333333333333333333333333333')
-      console.log(this.tableData)
       this.listLoading = false
     },
     handleUpdate(row) {
