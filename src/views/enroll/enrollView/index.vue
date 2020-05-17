@@ -16,39 +16,22 @@
         v-loading="listLoading"
         :data="tableData"
         element-loading-text="Loading..."
-        stripe
+        border
+        fit
+        highlight-current-row
         style="width: 100%"
       >
-        <el-table-column prop="Name" label="域名" />
-        <el-table-column prop="CurrentCName" label="CNAME" />
-        <el-table-column prop="Type" :formatter="typeFormatter" label="类型" />
-        <el-table-column prop="IsMiniProgramLive" :formatter="liveFormatter" label="场景" />
-        <el-table-column prop="Status" :formatter="statusFormatter" label="状态" class-name="status-col">
-          <template slot-scope="{row}">
-            <el-tag :type="row.status">
-              {{ row.status }}
-            </el-tag>
-          </template>
-        </el-table-column>
-        <el-table-column prop="CreateTime" label="开始时间" />
-        <el-table-column prop="RentExpireTime" label="过期时间" />
-
-        <el-table-column :label="$t('table.actions')" align="center" width="230" class-name="small-padding fixed-width">
-          <template slot-scope="{row,$index}">
-            <el-button type="primary" size="mini" @click="handleUpdate(row)">
-              {{ $t('table.edit') }}
-            </el-button>
-            <el-button v-if="row.status!='published'" size="mini" type="success" @click="handleModifyStatus(row,'published')">
-              {{ $t('table.publish') }}
-            </el-button>
-            <el-button v-if="row.status!='draft'" size="mini" @click="handleModifyStatus(row,'draft')">
-              {{ $t('table.draft') }}
-            </el-button>
-            <el-button v-if="row.status!='deleted'" size="mini" type="danger" @click="handleDelete(row,$index)">
-              {{ $t('table.delete') }}
-            </el-button>
-          </template>
-        </el-table-column>
+        <el-table-column prop="Name" label="用户姓名" />
+        <el-table-column prop="userName" label="用户名" />
+        <el-table-column prop="enrollType" label="报名类型" />
+        <el-table-column prop="papersType" label="文件类型" />
+        <el-table-column prop="cost" label="报名费用" class-name="status-col" />
+        <el-table-column prop="effective" label="有效" />
+        <el-table-column prop="recommended" label="推荐" />
+        <el-table-column prop="free" label="免费" />
+        <el-table-column prop="Status" :formatter="statusFormatter" label="状态" />
+        <el-table-column prop="CreateTime" label="创建时间" />
+        <el-table-column prop="CreateUsers" label="创建用户" />
       </el-table>
     </el-card>
   </div>
@@ -130,46 +113,58 @@ export default {
       // })
       this.tableData = [
         {
-          Name: 'push.tib1206.com',
+          Name: '巴雅斯古楞',
           Type: 0,
-          Status: 1,
           PlayType: 1,
           IsDelayLive: 0,
           IsMiniProgramLive: 0,
-          CreateTime: '2020-05-01 11:12:25',
           BCName: 1,
-          CurrentCName: 'push.tib1206.com.livepush.myqcloud.com',
-          TargetDomain: 'push.tib1206.com.livepush.myqcloud.com',
-          RentTag: 0,
-          RentExpireTime: '-'
+          userName: 'bayas',
+          enrollType: '在线报名',
+          papersType: '123',
+          cost: '200$',
+          effective: '是',
+          recommended: 'xxx',
+          free: 'true',
+          Status: 1,
+          CreateTime: '2020-05-17 11:12:25',
+          CreateUsers: '超级管理员'
         },
         {
-          Name: 'play.tib1206.com',
-          Type: 1,
-          Status: 1,
+          Name: '张三',
+          Type: 0,
           PlayType: 1,
           IsDelayLive: 0,
           IsMiniProgramLive: 0,
-          CreateTime: '2020-05-01 11:02:37',
           BCName: 1,
-          CurrentCName: 'play.tib1206.com.livecdn.liveplay.myqcloud.com',
-          TargetDomain: 'play.tib1206.com.livecdn.liveplay.myqcloud.com',
-          RentTag: 0,
-          RentExpireTime: '-'
+          userName: 'zhang',
+          enrollType: '线下报名',
+          papersType: '123',
+          cost: '200$',
+          effective: '是',
+          recommended: 'xxx',
+          free: 'true',
+          Status: 1,
+          CreateTime: '2020-05-17 11:12:25',
+          CreateUsers: '超级管理员'
         },
         {
-          Name: '95437.livepush.myqcloud.com',
+          Name: '李四',
           Type: 0,
-          Status: 0,
-          PlayType: 0,
+          PlayType: 1,
           IsDelayLive: 0,
           IsMiniProgramLive: 0,
-          CreateTime: '2020-04-30 15:47:18',
           BCName: 1,
-          CurrentCName: '95437.livepush.myqcloud.com',
-          TargetDomain: '95437.livepush.myqcloud.com',
-          RentTag: 0,
-          RentExpireTime: '-'
+          userName: 'li',
+          enrollType: '在线报名',
+          papersType: '123',
+          cost: '200$',
+          effective: '是',
+          recommended: 'xxx',
+          free: 'true',
+          Status: 1,
+          CreateTime: '2020-05-17 11:12:25',
+          CreateUsers: '超级管理员'
         }
       ]
       this.listLoading = false
@@ -188,8 +183,6 @@ export default {
         message: '操作成功',
         type: 'success'
       })
-      alert(row.Status)
-      alert(status)
       row.Status = status
     },
     handleDelete(row, index) {
@@ -224,9 +217,9 @@ export default {
     statusFormatter(row, column) {
       const status = row.Status
       if (status === 0) {
-        return '停用'
+        return '报名成功'
       } else {
-        return '启用'
+        return '报名失败'
       }
     },
     getSortClass: function(key) {

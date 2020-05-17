@@ -289,6 +289,56 @@ export const asyncRoutes = [
     ]
   },
   {
+    path: '/enroll',
+    component: Layout,
+    redirect: '@/views/enroll/enrollService/index',
+    alwaysShow: true, // will always show the root menu
+    name: '报名管理',
+    meta: {
+      title: '报名管理',
+      icon: 'lock',
+      roles: ['admin', 'editor'] // you can set roles in root nav
+    },
+    children: [
+      {
+        path: 'enrollService',
+        component: () => import('@/views/enroll/enrollService/index'),
+        name: '报名维护',
+        meta: {
+          title: '报名维护',
+          roles: ['admin'] // or you can only set roles in sub nav
+        }
+      },
+      {
+        path: 'enrollAudit',
+        component: () => import('@/views/enroll/enrollAudit/index'),
+        name: '报名审核',
+        meta: {
+          title: '报名审核',
+          roles: ['admin'] // or you can only set roles in sub nav
+        }
+      },
+      {
+        path: 'enrollDelete',
+        component: () => import('@/views/enroll/enrollDelete/index'),
+        name: '报名删除',
+        meta: {
+          title: '报名删除'
+          // if do not set roles, means: this page does not require permission
+        }
+      },
+      {
+        path: 'enrollView',
+        component: () => import('@/views/enroll/enrollView/index'),
+        name: '报名查看',
+        meta: {
+          title: '报名查看'
+          // if do not set roles, means: this page does not require permission
+        }
+      }
+    ]
+  },
+  {
     path: '/live',
     component: Layout,
     redirect: '/live/livestream/index',
