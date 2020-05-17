@@ -7,7 +7,7 @@
       clearable
     />
     <el-button style="margin:0 0 10px 10px;" type="success">成功按钮</el-button>
-    <el-button type="primary" @click="handleAddRole">
+    <el-button type="primary" class="filter-item" style="margin-left: 10px;" icon="el-icon-edit" @click="handleCreate">
       {{ $t('permission.addRole') }}
     </el-button>
     <el-card>
@@ -21,6 +21,7 @@
         highlight-current-row
         style="width: 100%"
       >
+        <el-table-column type="selection" align="center" />
         <el-table-column prop="Name" label="用户姓名" />
         <el-table-column prop="userName" label="用户名" />
         <el-table-column prop="enrollType" label="报名类型" />
@@ -38,7 +39,7 @@
         <el-table-column :label="$t('table.actions')" align="center" width="230" class-name="small-padding fixed-width">
           <template slot-scope="{row,$index}">
             <el-button type="primary" size="mini" @click="handleUpdate(row)">
-              {{ $t('table.edit') }}
+              编辑
             </el-button>
             <el-button v-if="row.status!='published'" size="mini" type="success" @click="handleModifyStatus(row,'published')">
               {{ $t('table.publish') }}
@@ -58,7 +59,7 @@
 
 <script>
 
-// import { fetchList } from '@/api/domain'
+import { createArticle } from '@/api/enroll'
 const calendarTypeOptions = [
   { key: 'CN', display_name: 'China' },
   { key: 'US', display_name: 'USA' },
@@ -121,15 +122,16 @@ export default {
     }
   },
   created() {
-    this.fetchData()
+    this.createArticle()
   },
   methods: {
-    fetchData() {
+    createArticle() {
       this.listLoading = true
-      // fetchList(this.postData).then(response => {
-      //   // this.tableData = response.data.Response.DomainList
-      //   this.listLoading = false
-      // })
+      createArticle(this.postData).then(response => {
+        this.tableData = response.data.Response.tableList
+        this.listLoading = false
+        console.log(this.tableData)
+      })
       this.tableData = [
         {
           Name: '巴雅斯古楞',

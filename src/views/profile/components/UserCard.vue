@@ -22,7 +22,7 @@
         <div class="user-bio-section-header"><svg-icon icon-class="education" /><span>Education</span></div>
         <div class="user-bio-section-body">
           <div class="text-muted">
-            理工大学计算机科学系
+            内蒙古师范大学教育学院
           </div>
         </div>
       </div>

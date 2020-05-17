@@ -10,13 +10,13 @@
         <el-col :span="18" :xs="24">
           <el-card>
             <el-tabs v-model="activeTab">
-              <el-tab-pane label="Activity" name="activity">
+              <el-tab-pane label="报名" name="activity">
                 <activity />
               </el-tab-pane>
-              <el-tab-pane label="Timeline" name="timeline">
+              <el-tab-pane label="查看" name="timeline">
                 <timeline />
               </el-tab-pane>
-              <el-tab-pane label="Account" name="account">
+              <el-tab-pane label="demo" name="account">
                 <account :user="user" />
               </el-tab-pane>
             </el-tabs>

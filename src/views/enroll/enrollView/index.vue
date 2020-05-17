@@ -21,6 +21,7 @@
         highlight-current-row
         style="width: 100%"
       >
+        <el-table-column type="selection" align="center" />
         <el-table-column prop="Name" label="用户姓名" />
         <el-table-column prop="userName" label="用户名" />
         <el-table-column prop="enrollType" label="报名类型" />

@@ -56,7 +56,7 @@
 
 <script>
 
-// import { fetchList } from '@/api/domain'
+import { fetchList } from '@/api/domain'
 const calendarTypeOptions = [
   { key: 'CN', display_name: 'China' },
   { key: 'US', display_name: 'USA' },
@@ -124,10 +124,10 @@ export default {
   methods: {
     fetchData() {
       this.listLoading = true
-      // fetchList(this.postData).then(response => {
-      //   // this.tableData = response.data.Response.DomainList
-      //   this.listLoading = false
-      // })
+      fetchList(this.postData).then(response => {
+        // this.tableData = response.data.Response.DomainList
+        this.listLoading = false
+      })
       this.tableData = [
         {
           Name: 'push.tib1206.com',
