@@ -200,7 +200,7 @@ export default {
   methods: {
     fetchList() {
       this.listLoading = true
-      fetchList(this.postData).then(response => {
+      fetchList(this.listQuery).then(response => {
         console.log('请求数据：', response)
         console.log('1111111111111111111111111111111111111bayas')
         // this.list = response.data.items

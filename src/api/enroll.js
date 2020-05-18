@@ -3,8 +3,8 @@ import request from '@/utils/request'
 // 在线直播列表
 export function fetchList(data) {
   return request({
-    url: '/admin/enroll/select',
-    method: 'post',
+    url: '/enroll/select',
+    method: 'get',
     params: data
   })
 }
@@ -27,7 +27,7 @@ export function fetchList(data) {
 
 export function createArticle(data) {
   return request({
-    url: '/admin/enroll/create',
+    url: '/enroll/create',
     method: 'post',
     data
   })
