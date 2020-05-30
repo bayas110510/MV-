@@ -12,93 +12,71 @@
     </el-button>
     <el-card>
       <el-table
-        :key="tableKey"
         v-loading="listLoading"
         :data="tableData"
         element-loading-text="Loading..."
-        border
-        fit
-        highlight-current-row
+        stripe
         style="width: 100%"
       >
-        <el-table-column type="selection" align="center" />
-        <el-table-column prop="Name" label="用户姓名" />
-        <el-table-column prop="userName" label="用户名" />
-        <el-table-column prop="enrollType" label="报名类型" />
-        <el-table-column prop="papersType" label="文件类型" />
-        <el-table-column prop="cost" label="报名费用" class-name="status-col" />
-        <el-table-column prop="effective" label="有效" />
-        <el-table-column prop="recommended" label="推荐" />
-        <el-table-column prop="free" label="免费" />
+        <el-table-column prop="Name" label="域名" />
+        <el-table-column prop="CurrentCName" label="CNAME" />
+        <el-table-column prop="Type" :formatter="typeFormatter" label="类型" />
+        <el-table-column prop="IsMiniProgramLive" :formatter="liveFormatter" label="场景" />
         <el-table-column prop="Status" :formatter="statusFormatter" label="状态" />
-        <el-table-column prop="CreateTime" label="创建时间" />
-        <el-table-column prop="CreateUsers" label="创建用户" />
+        <el-table-column prop="CreateTime" label="开始时间" />
+        <el-table-column prop="RentExpireTime" label="过期时间" />
+
+        <el-table-column :label="$t('table.actions')" align="center" width="230" class-name="small-padding fixed-width">
+          <template slot-scope="{row,$index}">
+            <el-button type="primary" size="mini" @click="handleUpdate(row)">
+              {{ $t('table.edit') }}
+            </el-button>
+            <el-button v-if="row.status!='published'" size="mini" type="success" @click="handleModifyStatus(row,'0')">
+              {{ $t('table.publish') }}
+            </el-button>
+            <el-button v-if="row.status!='draft'" size="mini" @click="handleModifyStatus(row,'1')">
+              {{ $t('table.draft') }}
+            </el-button>
+            <el-button v-if="row.status!='deleted'" size="mini" type="danger" @click="handleDelete(row,$index)">
+              {{ $t('table.delete') }}
+            </el-button>
+          </template>
+        </el-table-column>
       </el-table>
     </el-card>
   </div>
 </template>
 
 <script>
-
-// import { fetchList } from '@/api/domain'
-const calendarTypeOptions = [
-  { key: 'CN', display_name: 'China' },
-  { key: 'US', display_name: 'USA' },
-  { key: 'JP', display_name: 'Japan' },
-  { key: 'EU', display_name: 'Eurozone' }
-]
-
-const calendarTypeKeyValue = calendarTypeOptions.reduce((acc, cur) => {
-  acc[cur.key] = cur.display_name
-  return acc
-}, {})
+import { fetchList } from '@/api/domain'
+// import { Message } from 'element-ui'
+// import Axios from 'axios'
 export default {
   data() {
     return {
-      name: 'ComplexTable',
-      filters: {
-        statusFilter(status) {
-          const statusMap = {
-            published: 'success',
-            draft: 'info',
-            deleted: 'danger'
-          }
-          return statusMap[status]
-        },
-        typeFilter(type) {
-          return calendarTypeKeyValue[type]
-        }
-      },
       listLoading: true,
       input: '',
-      // tableData: null,
       tableData: null,
-      importanceOptions: [1, 2, 3],
-      calendarTypeOptions,
-      sortOptions: [{ label: 'ID Ascending', key: '+id' }, { label: 'ID Descending', key: '-id' }],
-      statusOptions: ['published', 'draft', 'deleted'],
-      showReviewer: false,
-      temp: {
-        id: undefined,
-        importance: 1,
-        remark: '',
-        timestamp: new Date(),
-        title: '',
-        type: '',
-        status: 'published'
-      },
-      dialogFormVisible: false,
-      dialogStatus: '',
-      textMap: {
-        update: 'Edit',
-        create: 'Create'
-      },
-      dialogPvVisible: false,
-      pvData: [],
-      rules: {
-        type: [{ required: true, message: 'type is required', trigger: 'change' }],
-        timestamp: [{ type: 'date', required: true, message: 'timestamp is required', trigger: 'change' }],
-        title: [{ required: true, message: 'title is required', trigger: 'blur' }]
+      postData: {
+        Response: {
+          OnlineInfo: [
+            {
+              StreamName: '5000_abcdefg',
+              AppName: 'live',
+              DomainName: '5000.livepush.myqcloud.com',
+              PublishTimeList: [
+                {
+                  PublishTime: '2017-10-24T12:00:00Z'
+                }
+              ]
+            }
+          ],
+          TotalNum: 1,
+          TotalPage: 1,
+          PageNum: 1,
+          PageSize: 10,
+          RequestId: '8e50cdb5-56dc-408b-89b0-31818958d424'
+        }
       }
     }
   },
@@ -108,66 +86,31 @@ export default {
   methods: {
     fetchData() {
       this.listLoading = true
-      // fetchList(this.postData).then(response => {
-      //   // this.tableData = response.data.Response.DomainList
-      //   this.listLoading = false
+      // Axios.post('http://mtv.tib1206.com/admin/domain/list', { data: this.postData }).then(function(response) {
+      //   var res = response.data
+      //   if (res === '登录成功,3秒后跳转主页') {
+      //     var noticeId = JSON.parse(window.sessionStorage.getItem('user'))
+      //     alert(noticeId)
+      //     alert(response.data)
+      //     setTimeout(function() {
+      //       this.listLoading = false
+      //     }, 3 * 1000)
+      //   } else if (response.data === '用户名不存在,请注册后重新登录') {
+      //     // that.message = response.data
+      //     Message({
+      //       message: response.data.msg,
+      //       type: 'error',
+      //       duration: 5 * 1000
+      //     })
+      //   }
+      // }).catch(function(error) {
+      //   alert(error)
       // })
-      this.tableData = [
-        {
-          Name: '巴雅斯古楞',
-          Type: 0,
-          PlayType: 1,
-          IsDelayLive: 0,
-          IsMiniProgramLive: 0,
-          BCName: 1,
-          userName: 'bayas',
-          enrollType: '在线报名',
-          papersType: '123',
-          cost: '200$',
-          effective: '是',
-          recommended: 'xxx',
-          free: 'true',
-          Status: 1,
-          CreateTime: '2020-05-17 11:12:25',
-          CreateUsers: '超级管理员'
-        },
-        {
-          Name: '张三',
-          Type: 0,
-          PlayType: 1,
-          IsDelayLive: 0,
-          IsMiniProgramLive: 0,
-          BCName: 1,
-          userName: 'zhang',
-          enrollType: '线下报名',
-          papersType: '123',
-          cost: '200$',
-          effective: '是',
-          recommended: 'xxx',
-          free: 'true',
-          Status: 1,
-          CreateTime: '2020-05-17 11:12:25',
-          CreateUsers: '超级管理员'
-        },
-        {
-          Name: '李四',
-          Type: 0,
-          PlayType: 1,
-          IsDelayLive: 0,
-          IsMiniProgramLive: 0,
-          BCName: 1,
-          userName: 'li',
-          enrollType: '在线报名',
-          papersType: '123',
-          cost: '200$',
-          effective: '是',
-          recommended: 'xxx',
-          free: 'true',
-          Status: 1,
-          CreateTime: '2020-05-17 11:12:25',
-          CreateUsers: '超级管理员'
-        }
-      ]
+      fetchList(this.postData).then(response => {
+        this.tableData = response.data.Response.DomainList
+        console.log(this.tableData)
+        this.listLoading = false
+      })
       this.listLoading = false
     },
     handleUpdate(row) {
@@ -194,7 +137,6 @@ export default {
         duration: 2000
       })
       this.list.splice(index, 1)
-      console.log('点击了删除按钮')
     },
     // 类型
     typeFormatter(row, column) {
@@ -218,9 +160,9 @@ export default {
     statusFormatter(row, column) {
       const status = row.Status
       if (status === 0) {
-        return '报名成功'
+        return '停用'
       } else {
-        return '报名失败'
+        return '启用'
       }
     },
     getSortClass: function(key) {

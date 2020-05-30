@@ -6,10 +6,8 @@
       placeholder="请输入内容"
       clearable
     />
-    <el-button style="margin:0 0 10px 10px;" type="success">成功按钮</el-button>
-    <el-button type="primary">
-      {{ $t('permission.addRole') }}
-    </el-button>
+    <el-button class="filter-item" type="primary" icon="el-icon-search">{{ $t('table.search') }}</el-button>
+    <el-button type="primary" @click="handleCreate">{{ $t('table.add') }}</el-button>
     <el-card>
       <el-table
         v-loading="listLoading"
@@ -18,23 +16,20 @@
         stripe
         style="width: 100%"
       >
-        <el-table-column prop="Name" label="域名" />
-        <el-table-column prop="CurrentCName" label="CNAME" />
-        <el-table-column prop="Type" :formatter="typeFormatter" label="类型" />
-        <el-table-column prop="IsMiniProgramLive" :formatter="liveFormatter" label="场景" />
-        <el-table-column prop="Status" :formatter="statusFormatter" label="状态" class-name="status-col">
+        <el-table-column prop="Name" label="用户名" />
+        <el-table-column prop="enrollType" label="报名类型" />
+        <el-table-column prop="opustype" label="作品类型" />
+        <el-table-column prop="createdate" label="创建时间" />
+        <el-table-column prop="status" label="状态" class-name="status-col">
           <template slot-scope="{row}">
-            <el-tag :type="row.status">
+            <el-tag :type="row.status | statusFilter">
               {{ row.status }}
             </el-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="CreateTime" label="开始时间" />
-        <el-table-column prop="RentExpireTime" label="过期时间" />
-
         <el-table-column :label="$t('table.actions')" align="center" width="230" class-name="small-padding fixed-width">
           <template slot-scope="{row,$index}">
-            <el-button type="primary" size="mini" @click="handleUpdate(row)">
+            <el-button type="primary" size="mini">
               {{ $t('table.edit') }}
             </el-button>
             <el-button v-if="row.status!='published'" size="mini" type="success" @click="handleModifyStatus(row,'published')">
@@ -50,71 +45,50 @@
         </el-table-column>
       </el-table>
     </el-card>
+
+    <!-- 弹出框 -->
+    <!-- <el-dialog>
+      <el-form :model="temp" label-position="left" label-width="70px" style="width: 400px; margin-left:50px;">
+        <el-form-item label="用户名" prop="fullname">
+          <el-input v-model="temp.fullname" />
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogFormVisible = false">
+          {{ $t('table.cancel') }}
+        </el-button>
+        <el-button type="primary" @click="dialogStatus==='create'?createData():updateData()">
+          {{ $t('table.confirm') }}
+        </el-button>
+      </div>
+    </el-dialog> -->
   </div>
 </template>
 
 <script>
 
 import { fetchList } from '@/api/domain'
-const calendarTypeOptions = [
-  { key: 'CN', display_name: 'China' },
-  { key: 'US', display_name: 'USA' },
-  { key: 'JP', display_name: 'Japan' },
-  { key: 'EU', display_name: 'Eurozone' }
-]
 
-const calendarTypeKeyValue = calendarTypeOptions.reduce((acc, cur) => {
-  acc[cur.key] = cur.display_name
-  return acc
-}, {})
 export default {
+  filters: {
+    statusFilter(status) {
+      const statusMap = {
+        published: 'success',
+        draft: 'info',
+        deleted: 'danger'
+      }
+      return statusMap[status]
+    }
+  },
   data() {
     return {
-      name: 'ComplexTable',
-      filters: {
-        statusFilter(status) {
-          const statusMap = {
-            published: 'success',
-            draft: 'info',
-            deleted: 'danger'
-          }
-          return statusMap[status]
-        },
-        typeFilter(type) {
-          return calendarTypeKeyValue[type]
-        }
-      },
       listLoading: true,
       input: '',
       // tableData: null,
-      tableData: null,
-      importanceOptions: [1, 2, 3],
-      calendarTypeOptions,
-      sortOptions: [{ label: 'ID Ascending', key: '+id' }, { label: 'ID Descending', key: '-id' }],
-      statusOptions: ['published', 'draft', 'deleted'],
-      showReviewer: false,
-      temp: {
-        id: undefined,
-        importance: 1,
-        remark: '',
-        timestamp: new Date(),
-        title: '',
-        type: '',
-        status: 'published'
-      },
-      dialogFormVisible: false,
-      dialogStatus: '',
-      textMap: {
-        update: 'Edit',
-        create: 'Create'
-      },
-      dialogPvVisible: false,
-      pvData: [],
-      rules: {
-        type: [{ required: true, message: 'type is required', trigger: 'change' }],
-        timestamp: [{ type: 'date', required: true, message: 'timestamp is required', trigger: 'change' }],
-        title: [{ required: true, message: 'title is required', trigger: 'blur' }]
-      }
+      tableData: null
+      // temp
+      //  报名类型
+      // enrollTypeOptions: ['商品演出招商', '晚会招商', '广告招商', '设备租赁']
     }
   },
   created() {
@@ -131,7 +105,8 @@ export default {
         {
           Name: 'push.tib1206.com',
           Type: 0,
-          Status: 1,
+          // Status: 1,
+          status: 'published',
           PlayType: 1,
           IsDelayLive: 0,
           IsMiniProgramLive: 0,
@@ -145,7 +120,8 @@ export default {
         {
           Name: 'play.tib1206.com',
           Type: 1,
-          Status: 1,
+          // Status: 1,
+          status: 'draft',
           PlayType: 1,
           IsDelayLive: 0,
           IsMiniProgramLive: 0,
@@ -159,7 +135,8 @@ export default {
         {
           Name: '95437.livepush.myqcloud.com',
           Type: 0,
-          Status: 0,
+          // Status: 0,
+          status: 'draft',
           PlayType: 0,
           IsDelayLive: 0,
           IsMiniProgramLive: 0,
@@ -173,16 +150,11 @@ export default {
       ]
       this.listLoading = false
     },
-    handleUpdate(row) {
-      this.temp = Object.assign({}, row) // copy obj
-      this.temp.timestamp = new Date(this.temp.timestamp)
-      this.dialogStatus = 'update'
-      this.dialogFormVisible = true
-      this.$nextTick(() => {
-        this.$refs['dataForm'].clearValidate()
-      })
+    handleCreate() {
+      alert('弹出框')
     },
     handleModifyStatus(row, status) {
+      alert('草稿&发布点击事件')
       this.$message({
         message: '操作成功',
         type: 'success'
@@ -200,33 +172,6 @@ export default {
       })
       this.list.splice(index, 1)
       console.log('点击了删除按钮')
-    },
-    // 类型
-    typeFormatter(row, column) {
-      const type = row.Type
-      if (type === 0) {
-        return '推流'
-      } else {
-        return '播放'
-      }
-    },
-    // 场景
-    liveFormatter(row, column) {
-      const live = row.IsMiniProgramLive
-      if (live === 0) {
-        return '标准直播'
-      } else {
-        return '小程序直播'
-      }
-    },
-    // 状态
-    statusFormatter(row, column) {
-      const status = row.Status
-      if (status === 0) {
-        return '停用'
-      } else {
-        return '启用'
-      }
     },
     getSortClass: function(key) {
       const sort = this.listQuery.sort
