@@ -205,7 +205,7 @@ export default {
         type: 'success',
         duration: 2000
       })
-      this.list.splice(index, 1)
+      this.tableData.splice(index, 1)
       console.log('点击了删除按钮')
     },
     getSortClass: function(key) {
