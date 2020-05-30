@@ -3,8 +3,6 @@
   <div class="app-container">
     <el-card>
       <el-table
-        v-loading="listLoading"
-        :data="tableData"
         element-loading-text="Loading..."
         stripe
         style="width: 100%"

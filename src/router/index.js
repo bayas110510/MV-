@@ -40,6 +40,19 @@ import nestedRouter from './modules/nested'
  */
 export const constantRoutes = [
   {
+    path: '/',
+    component: Layout,
+    redirect: '/dashboard',
+    children: [
+      {
+        path: 'dashboard',
+        component: () => import('@/views/dashboard/index'),
+        name: 'Dashboard',
+        meta: { title: 'dashboard', icon: 'dashboard', affix: true }
+      }
+    ]
+  },
+  {
     path: '/redirect',
     component: Layout,
     hidden: true,
@@ -56,9 +69,9 @@ export const constantRoutes = [
     hidden: true
   },
   {
-    path: '/',
+    path: '/column',
     component: Layout,
-    // redirect: '/administrate/index',
+    redirect: '/administrate/components/column',
     alwaysShow: false, // will always show the root menu
     name: '网站管理',
     meta: {
@@ -115,56 +128,6 @@ export const constantRoutes = [
     ]
   },
   {
-    path: '/celebrity',
-    component: Layout,
-    // redirect: '/administrate/index',
-    alwaysShow: true, // will always show the root menu
-    name: '名人管理',
-    meta: {
-      title: '名人管理',
-      icon: 'peoples'
-      // roles: ['admin', 'editor'] // you can set roles in root nav
-    },
-    children: [
-      {
-        path: 'maintenance',
-        component: () => import('@/views/celebrity/components/maintenance'),
-        name: '名人维护',
-        meta: {
-          title: '名人维护',
-          roles: ['admin'] // or you can only set roles in sub nav
-        }
-      },
-      {
-        path: 'auditing',
-        component: () => import('@/views/celebrity/components/auditing'),
-        name: '名人审核',
-        meta: {
-          title: '名人审核',
-          roles: ['admin'] // or you can only set roles in sub nav
-        }
-      },
-      {
-        path: 'deleteContent',
-        component: () => import('@/views/celebrity/components/deleteContent'),
-        name: '删除内容',
-        meta: {
-          title: '删除内容',
-          roles: ['admin'] // or you can only set roles in sub nav
-        }
-      },
-      {
-        path: 'view',
-        component: () => import('@/views/celebrity/components/view'),
-        name: '名人查看',
-        meta: {
-          title: '名人查看',
-          roles: ['admin'] // or you can only set roles in sub nav
-        }
-      }
-    ]
-  },
-  {
     path: '/auth-redirect',
     component: () => import('@/views/login/auth-redirect'),
     hidden: true
@@ -178,19 +141,6 @@ export const constantRoutes = [
     path: '/401',
     component: () => import('@/views/error-page/401'),
     hidden: true
-  },
-  {
-    path: '/',
-    component: Layout,
-    redirect: '/dashboard',
-    children: [
-      {
-        path: 'dashboard',
-        component: () => import('@/views/dashboard/index'),
-        name: 'Dashboard',
-        meta: { title: 'dashboard', icon: 'dashboard', affix: true }
-      }
-    ]
   },
   {
     path: '/documentation',

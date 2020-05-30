@@ -2,7 +2,6 @@
 <template>
   <div class="app-container">
     <el-input
-      v-model="input"
       style="margin:0 0 20px 20px; width:300px;"
       placeholder="请输入内容"
       clearable
@@ -10,8 +9,6 @@
     <el-button style="margin:0 0 10px 10px;" type="success">成功按钮</el-button>
     <el-card>
       <el-table
-        v-loading="listLoading"
-        :data="tableData"
         element-loading-text="Loading..."
         stripe
         style="width: 100%"

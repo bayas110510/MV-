@@ -7,12 +7,11 @@
       clearable
     />
     <el-button style="margin:0 0 10px 10px;" type="success">成功按钮</el-button>
-    <el-button type="primary" @click="handleAddRole">
+    <el-button type="primary">
       {{ $t('permission.addRole') }}
     </el-button>
     <el-card>
       <el-table
-        :key="tableKey"
         v-loading="listLoading"
         :data="tableData"
         element-loading-text="Loading..."
