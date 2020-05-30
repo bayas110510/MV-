@@ -7,7 +7,7 @@
       clearable
     />
     <el-button class="filter-item" type="primary" icon="el-icon-search">{{ $t('table.search') }}</el-button>
-    <el-button type="primary" @click="handleCreate">{{ $t('table.add') }}</el-button>
+    <el-button type="primary" @click="dialogFormVisible = true">{{ $t('table.add') }}</el-button>
     <el-card>
       <el-table
         v-loading="listLoading"
@@ -16,7 +16,7 @@
         stripe
         style="width: 100%"
       >
-        <el-table-column prop="Name" label="用户名" />
+        <el-table-column prop="fullname" label="用户名" />
         <el-table-column prop="enrollType" label="报名类型" />
         <el-table-column prop="opustype" label="作品类型" />
         <el-table-column prop="createdate" label="创建时间" />
@@ -47,10 +47,27 @@
     </el-card>
 
     <!-- 弹出框 -->
-    <!-- <el-dialog>
-      <el-form :model="temp" label-position="left" label-width="70px" style="width: 400px; margin-left:50px;">
+    <el-dialog :visible.sync="dialogFormVisible">
+      <el-form :model="temp" label-position="left" label-width="120px" style="width: 400px; margin-left:50px;">
+        <!-- 添加用户名 -->
         <el-form-item label="用户名" prop="fullname">
           <el-input v-model="temp.fullname" />
+        </el-form-item>
+        <!-- 报名类型 -->
+        <el-form-item label="报名类型">
+          <el-select v-model="temp.enrolltype" class="filter-item" placeholder="报名类型" prop="enrolltype">
+            <el-option v-for="item in enrollTypeOptions" :key="item" :label="item.display_name" :value="item" />
+          </el-select>
+        </el-form-item>
+        <!-- 作品类型 -->
+        <el-form-item label="作品类型">
+          <el-select v-model="temp.opustype" class="filter-item" placeholder="作品类型">
+            <el-option v-for="item in opusTypeOptions" :key="item" :label="item.display_name" :value="item" />
+          </el-select>
+        </el-form-item>
+        <!-- 创建时间 -->
+        <el-form-item label="创建时间" prop="timestamp">
+          <el-date-picker v-model="temp.createdate" type="datetime" placeholder="Please pick a date" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -61,13 +78,15 @@
           {{ $t('table.confirm') }}
         </el-button>
       </div>
-    </el-dialog> -->
+    </el-dialog>
   </div>
 </template>
 
 <script>
 
 import { fetchList } from '@/api/domain'
+// import { Message } from 'element-ui'
+// import Axios from 'axios'
 
 export default {
   filters: {
@@ -85,7 +104,20 @@ export default {
       listLoading: true,
       input: '',
       // tableData: null,
-      tableData: null
+      tableData: null,
+      //  报名类型
+      enrollTypeOptions: ['商品演出招商', '晚会招商', '广告招商', '设备租赁'],
+      //  作品类型
+      opusTypeOptions: ['歌曲', '乐谱', '歌词'],
+      // 弹出框
+      dialogFormVisible: false,
+      temp: {
+
+        fullname: '',
+        enrolltype: '',
+        opustype: '',
+        createdate: ''
+      }
       // temp
       //  报名类型
       // enrollTypeOptions: ['商品演出招商', '晚会招商', '广告招商', '设备租赁']
@@ -103,6 +135,7 @@ export default {
       })
       this.tableData = [
         {
+          fullname: 'bayas',
           Name: 'push.tib1206.com',
           Type: 0,
           // Status: 1,
@@ -118,6 +151,7 @@ export default {
           RentExpireTime: '-'
         },
         {
+          fullname: 'bayas',
           Name: 'play.tib1206.com',
           Type: 1,
           // Status: 1,
@@ -133,6 +167,7 @@ export default {
           RentExpireTime: '-'
         },
         {
+          fullname: 'bayas',
           Name: '95437.livepush.myqcloud.com',
           Type: 0,
           // Status: 0,
