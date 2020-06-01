@@ -152,16 +152,16 @@ export default {
   created() {
   },
   methods: {
-    resetTemp() {
-      this.userInfo = {
-        fullname: '',
-        enrolltype: '',
-        opustype: '',
-        createdate: new Date()
-        // type: ''
-        // status: 'published'
-      }
-    },
+    // resetTemp() {
+    //   this.userInfo = {
+    //     fullname: '',
+    //     enrolltype: '',
+    //     opustype: '',
+    //     createdate: new Date()
+    //     // type: ''
+    //     // status: 'published'
+    //   }
+    // },
     // 增加
     add() {
       // this.resetTemp()
