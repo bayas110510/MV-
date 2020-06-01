@@ -1,8 +1,6 @@
 <template>
   <div class="app-container">
-    <!--按钮、表格-->
     <el-input
-      v-model="input"
       style="margin:0 0 20px 20px; width:300px;"
       placeholder="请输入内容"
       clearable
@@ -10,7 +8,7 @@
     <el-button class="filter-item" type="primary" icon="el-icon-search">{{ $t('table.search') }}</el-button>
     <el-button type="primary" @click="add">{{ $t('table.add') }}</el-button>
     <el-card>
-      <el-table :data="tableData" stripe element-loading-text="Loading...">
+      <el-table :data="tableData" stripe element-loading-text="Loading..." highlight-current-row>
         <!-- 用户名 -->
         <el-table-column prop="fullname" label="用户名" align="center" />
         <!-- 报名类型 -->
@@ -40,14 +38,14 @@
           </template>
         </el-table-column>
         <el-table-column label="操作" fixed="right" align="center">
-          <template slot-scope="scope">
+          <template slot-scope="scope,row">
             <el-button type="primary" size="mini" @click="handleEdit(scope.$index, scope.row)">
               {{ $t('table.edit') }}
             </el-button>
-            <el-button size="mini" type="success">
+            <el-button size="mini" type="success" @click="handleModifyStatus(row,'published')">
               {{ $t('table.publish') }}
             </el-button>
-            <el-button size="mini">
+            <el-button size="mini" @click="handleModifyStatus(row,'draft')">
               {{ $t('table.draft') }}
             </el-button>
             <el-button type="danger" size="mini" @click="remove(scope.$index, scope.row)">
@@ -97,16 +95,16 @@
 
 <script>
 export default {
-  // filters: {
-  //   statusFilter(status) {
-  //     const statusMap = {
-  //       published: 'success',
-  //       draft: 'info',
-  //       deleted: 'danger'
-  //     }
-  //     return statusMap[status]
-  //   }
-  // },
+  filters: {
+    statusFilter(status) {
+      const statusMap = {
+        published: 'success',
+        draft: 'info',
+        deleted: 'danger'
+      }
+      return statusMap[status]
+    }
+  },
   data() {
     return {
       userInfo: {
@@ -154,16 +152,16 @@ export default {
   created() {
   },
   methods: {
-    // resetTemp() {
-    //   this.userInfo = {
-    //     fullname: '',
-    //     enrolltype: '',
-    //     opustype: '',
-    //     createdate: '',
-    //     type: '',
-    //     status: 'published'
-    //   }
-    // },
+    resetTemp() {
+      this.userInfo = {
+        fullname: '',
+        enrolltype: '',
+        opustype: '',
+        createdate: new Date()
+        // type: ''
+        // status: 'published'
+      }
+    },
     // 增加
     add() {
       // this.resetTemp()
@@ -202,15 +200,16 @@ export default {
           type: 'success'
         })
       })
-    }
+    },
     // 状态切换
-    // handleModifyStatus(row, status) {
-    //   this.$message({
-    //     message: '操作成功',
-    //     type: 'success'
-    //   })
-    //   row.status = status
-    // }
+    handleModifyStatus(row, status) {
+      this.$message({
+        message: '操作成功',
+        type: 'success'
+      })
+      row.status = status
+      console.log(status)
+    }
   }
 }
 </script>
