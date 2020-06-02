@@ -1,8 +1,6 @@
 <template>
   <div class="app-container">
-    <!--按钮、表格-->
     <el-input
-      v-model="input"
       style="margin:0 0 20px 20px; width:300px;"
       placeholder="请输入内容"
       clearable
@@ -10,7 +8,7 @@
     <el-button class="filter-item" type="primary" icon="el-icon-search">{{ $t('table.search') }}</el-button>
     <el-button type="primary" @click="add">{{ $t('table.add') }}</el-button>
     <el-card>
-      <el-table :data="tableData" stripe element-loading-text="Loading...">
+      <el-table :data="tableData" stripe element-loading-text="Loading..." highlight-current-row>
         <!-- 用户名 -->
         <el-table-column prop="fullname" label="用户名" align="center" />
         <!-- 报名类型 -->
@@ -44,10 +42,10 @@
             <el-button type="primary" size="mini" @click="handleEdit(scope.$index, scope.row)">
               {{ $t('table.edit') }}
             </el-button>
-            <el-button size="mini" type="success">
+            <el-button v-if="scope.row.status!='published'" size="mini" type="success" @click="handleModifyStatus(scope.row,'published')">
               {{ $t('table.publish') }}
             </el-button>
-            <el-button size="mini">
+            <el-button v-if="scope.row.status!='draft'" size="mini" @click="handleModifyStatus( scope.row,'draft')">
               {{ $t('table.draft') }}
             </el-button>
             <el-button type="danger" size="mini" @click="remove(scope.$index, scope.row)">
@@ -97,16 +95,16 @@
 
 <script>
 export default {
-  // filters: {
-  //   statusFilter(status) {
-  //     const statusMap = {
-  //       published: 'success',
-  //       draft: 'info',
-  //       deleted: 'danger'
-  //     }
-  //     return statusMap[status]
-  //   }
-  // },
+  filters: {
+    statusFilter(status) {
+      const statusMap = {
+        published: 'success',
+        draft: 'info',
+        deleted: 'danger'
+      }
+      return statusMap[status]
+    }
+  },
   data() {
     return {
       userInfo: {
@@ -114,9 +112,10 @@ export default {
         enrolltype: '',
         opustype: '',
         createdate: '',
-        type: '',
+        // type: '',
         status: 'published'
       },
+      status: '',
       iconFormVisible: false,
       // userInfo: {},
       dialogTitle: '增加',
@@ -135,7 +134,7 @@ export default {
         },
         {
           id: 2,
-          fullname: 'tunnl',
+          fullname: '李四',
           enrolltype: '商品演出招商',
           opustype: '歌词',
           createdate: '2020-05-01 11:12:25',
@@ -143,7 +142,7 @@ export default {
         },
         {
           id: 3,
-          fullname: 'ga',
+          fullname: '张三',
           enrolltype: '晚会',
           opustype: '乐谱',
           createdate: '2020-05-01 11:12:25',
@@ -154,19 +153,19 @@ export default {
   created() {
   },
   methods: {
-    // resetTemp() {
-    //   this.userInfo = {
-    //     fullname: '',
-    //     enrolltype: '',
-    //     opustype: '',
-    //     createdate: '',
-    //     type: '',
-    //     status: 'published'
-    //   }
-    // },
+    resetTemp() {
+      this.userInfo = {
+        fullname: '',
+        enrolltype: '',
+        opustype: '',
+        createdate: new Date(),
+        // type: ''
+        status: 'published'
+      }
+    },
     // 增加
     add() {
-      // this.resetTemp()
+      this.resetTemp()
       this.dialogTitle = '增加'
       this.userInfo = {}
       this.iconFormVisible = true
@@ -202,15 +201,18 @@ export default {
           type: 'success'
         })
       })
+    },
+    // 点击发布和草稿按钮切换状态
+    handleModifyStatus(row, status) {
+      this.$message({
+        message: '操作成功',
+        type: 'success'
+      })
+      row.status = status
+      console.log('打印88888888888888888888', row.status)
+      // console.log('点击了发布&&&&草稿按钮')
+      // alert('点击了发布&&&&草稿按钮')
     }
-    // 状态切换
-    // handleModifyStatus(row, status) {
-    //   this.$message({
-    //     message: '操作成功',
-    //     type: 'success'
-    //   })
-    //   row.status = status
-    // }
   }
 }
 </script>

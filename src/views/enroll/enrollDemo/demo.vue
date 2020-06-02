@@ -38,16 +38,14 @@
           </template>
         </el-table-column>
         <el-table-column label="操作" fixed="right" align="center">
-          <template slot-scope="scope,row">
+          <template slot-scope="scope">
             <el-button type="primary" size="mini" @click="handleEdit(scope.$index, scope.row)">
               {{ $t('table.edit') }}
             </el-button>
-            <el-button size="mini" type="success" @click="handleModifyStatus(row,'published')">
-              <!-- v-if="row.status!='published'" -->
+            <el-button v-if="scope.row.status!='published'" size="mini" type="success" @click="handleModifyStatus(scope.row,'published')">
               {{ $t('table.publish') }}
             </el-button>
-            <el-button size="mini" @click="handleModifyStatus(row,'draft')">
-              <!--  v-if="row.status!='draft'" -->
+            <el-button v-if="scope.row.status!='draft'" size="mini" @click="handleModifyStatus( scope.row,'draft')">
               {{ $t('table.draft') }}
             </el-button>
             <el-button type="danger" size="mini" @click="remove(scope.$index, scope.row)">
@@ -113,12 +111,10 @@ export default {
         fullname: '',
         enrolltype: '',
         opustype: '',
-        createdate: '',
-        // type: '',
-        status: 'published'
+        createdate: ''
       },
+      status: '',
       iconFormVisible: false,
-      // userInfo: {},
       dialogTitle: '增加',
       rowIndex: null,
       opusTypeOptions: ['歌曲', '乐谱', '歌词'],
@@ -154,19 +150,8 @@ export default {
   created() {
   },
   methods: {
-    // resetTemp() {
-    //   this.userInfo = {
-    //     fullname: '',
-    //     enrolltype: '',
-    //     opustype: '',
-    //     createdate: new Date()
-    //     // type: ''
-    //     // status: 'published'
-    //   }
-    // },
     // 增加
     add() {
-      // this.resetTemp()
       this.dialogTitle = '增加'
       this.userInfo = {}
       this.iconFormVisible = true
@@ -203,15 +188,16 @@ export default {
         })
       })
     },
-    // 状态切换
+    // 点击发布和草稿按钮切换状态
     handleModifyStatus(row, status) {
       this.$message({
         message: '操作成功',
         type: 'success'
       })
-      console.log('row的打印值：', row)
       row.status = status
-      console.log(' status的值 ', row.status)
+      console.log('打印88888888888888888888', row.status)
+      // console.log('点击了发布&&&&草稿按钮')
+      // alert('点击了发布&&&&草稿按钮')
     }
   }
 }

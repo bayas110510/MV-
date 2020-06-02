@@ -253,9 +253,9 @@ export const asyncRoutes = [
       {
         path: 'enrollService',
         component: () => import('@/views/enroll/enrollService/index'),
-        name: '报名维护',
+        name: '报名',
         meta: {
-          title: '报名维护',
+          title: '报名',
           roles: ['admin'] // or you can only set roles in sub nav
         }
       },
