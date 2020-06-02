@@ -1,7 +1,7 @@
 <template>
   <el-card style="margin-bottom:20px;">
     <div slot="header" class="clearfix">
-      <span>个人信息</span>
+      <span>个人中心</span>
     </div>
 
     <div class="user-profile">
@@ -22,29 +22,46 @@
         <div class="user-bio-section-header"><svg-icon icon-class="education" /><span>Education</span></div>
         <div class="user-bio-section-body">
           <div class="text-muted">
-            内蒙古师范大学教育学院
+            <div class="account-center-detail">
+              <p>
+                <i class="el-icon-user" />巴雅斯古楞
+              </p>
+              <p>
+                <i class="el-icon-map-location" />
+                <span>内蒙古</span>
+                <span>呼和浩特市</span>
+              </p>
+              <p>
+                <i class="el-icon-user" />我的作品
+              </p>
+              <p>
+                <i class="el-icon-user" />介绍
+              </p>
+              <p>
+                <i class="el-icon-setting" /><span><a href="#">设置</a></span>
+              </p>
+            </div>
           </div>
         </div>
       </div>
 
       <div class="user-skills user-bio-section">
-        <div class="user-bio-section-header"><svg-icon icon-class="skill" /><span>Skills</span></div>
+        <div class="user-bio-section-header"><i class="el-icon-upload" /><span>我的上传</span></div>
         <div class="user-bio-section-body">
           <div class="progress-item">
-            <span>Vue</span>
+            <i class="el-icon-mic" />
+            <span>歌曲</span>
             <el-progress :percentage="70" />
           </div>
           <div class="progress-item">
-            <span>JavaScript</span>
+            <i class="el-icon-video-camera" />
+            <span>MV</span>
             <el-progress :percentage="18" />
           </div>
           <div class="progress-item">
-            <span>Css</span>
-            <el-progress :percentage="12" />
-          </div>
-          <div class="progress-item">
-            <span>ESLint</span>
-            <el-progress :percentage="100" status="success" />
+            <i class="el-icon-tickets" />
+            <span>歌词</span>
+            <el-progress :percentage="12" show-text="bayas" />
           </div>
         </div>
       </div>
@@ -129,6 +146,25 @@ export default {
       margin-bottom: 10px;
       font-weight: bold;
     }
+  }
+  .account-center-detail {
+    p {
+      margin-bottom: 8px;
+      padding-left: 26px;
+      position: relative;
+    }
+    span:hover{
+      color: orange;
+    }
+
+    i {
+      position: absolute;
+      height: 14px;
+      width: 14px;
+      left: 0;
+      top: 0;
+    }
+
   }
 }
 </style>
