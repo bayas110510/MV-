@@ -43,9 +43,11 @@
               {{ $t('table.edit') }}
             </el-button>
             <el-button size="mini" type="success" @click="handleModifyStatus(row,'published')">
+              <!-- v-if="row.status!='published'" -->
               {{ $t('table.publish') }}
             </el-button>
             <el-button size="mini" @click="handleModifyStatus(row,'draft')">
+              <!--  v-if="row.status!='draft'" -->
               {{ $t('table.draft') }}
             </el-button>
             <el-button type="danger" size="mini" @click="remove(scope.$index, scope.row)">
@@ -112,7 +114,7 @@ export default {
         enrolltype: '',
         opustype: '',
         createdate: '',
-        type: '',
+        // type: '',
         status: 'published'
       },
       iconFormVisible: false,
@@ -207,8 +209,9 @@ export default {
         message: '操作成功',
         type: 'success'
       })
+      console.log('row的打印值：', row)
       row.status = status
-      console.log(status)
+      console.log(' status的值 ', row.status)
     }
   }
 }
