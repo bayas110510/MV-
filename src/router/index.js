@@ -338,6 +338,33 @@ export const asyncRoutes = [
       }
     ]
   },
+  // 个人中心
+  {
+    path: '/Personal',
+    component: Layout,
+    redirect: '@/views/Personal/index',
+    alwaysShow: true, // will always show the root menu
+    name: '个人中心',
+    meta: {
+      title: '个人页',
+      icon: 'lock',
+      roles: ['admin', 'editor'] // you can set roles in root nav
+    },
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/Personal/index'),
+        name: '个人中心',
+        meta: { title: '个人中心', noCache: true }
+      },
+      {
+        path: 'setting',
+        component: () => import('@/views/Personal/settings/index'),
+        name: '个人设置',
+        meta: { title: '个人设置', noCache: true }
+      }
+    ]
+  },
 
   {
     path: '/permission',
