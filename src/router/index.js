@@ -340,11 +340,11 @@ export const asyncRoutes = [
   },
   // 个人中心
   {
-    path: '/Personal',
+    path: '/profile',
     component: Layout,
-    redirect: '@/views/Personal/index',
+    redirect: '@/views/profile/index',
     alwaysShow: true, // will always show the root menu
-    name: '个人中心',
+    name: '个人页',
     meta: {
       title: '个人页',
       icon: 'lock',
@@ -353,19 +353,18 @@ export const asyncRoutes = [
     children: [
       {
         path: 'index',
-        component: () => import('@/views/Personal/index'),
+        component: () => import('@/views/profile/index'),
         name: '个人中心',
         meta: { title: '个人中心', noCache: true }
       },
       {
         path: 'setting',
-        component: () => import('@/views/Personal/settings/index'),
+        component: () => import('@/views/profile/settings/index'),
         name: '个人设置',
         meta: { title: '个人设置', noCache: true }
       }
     ]
   },
-
   {
     path: '/permission',
     component: Layout,
