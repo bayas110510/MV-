@@ -32,10 +32,14 @@
                 <span>呼和浩特市</span>
               </p>
               <p>
-                <i class="el-icon-user" /><span><a href="#">我的作品</a></span>
+                <i class="el-icon-folder-opened" /><span><a href="#">我的作品</a></span>
               </p>
               <p>
-                <i class="el-icon-user" /><span><a href="#">介绍</a></span>
+                <i class="el-icon-download" /><span><a href="#">我的下载</a></span>
+
+              </p>
+              <p>
+                <i class="el-icon-chat-dot-square" /><span><a href="#">介绍</a></span>
               </p>
               <p>
                 <i class="el-icon-setting" /><span><a href="#">设置</a></span>
@@ -153,7 +157,7 @@ export default {
       padding-left: 26px;
       position: relative;
     }
-    span:hover{
+    a:hover{
       color: orange;
     }
 

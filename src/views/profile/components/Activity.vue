@@ -1,19 +1,5 @@
 <template>
   <el-form ref="form" :model="form" label-width="80px" class="box">
-    <!-- 用户名  -->
-    <el-form-item label="用户名">
-      <el-input v-model="form.name" />
-    </el-form-item>
-    <!-- 上传图片 -->
-    <el-upload
-      class="avatar-uploader"
-      action="https://jsonplaceholder.typicode.com/posts/"
-      :show-file-list="false"
-      :on-success="handleAvatarSuccess"
-      :before-upload="beforeAvatarUpload">
-      <img v-if="imageUrl" :src="imageUrl" class="avatar">
-      <i v-else class="el-icon-plus avatar-uploader-icon" />
-    </el-upload>
     <!-- 报名类型 -->
     <el-form-item label="报名类型">
       <el-select v-model="form.enrollType" class="filter-item" placeholder="请选择报名类型">
@@ -26,7 +12,6 @@
     </el-form-item>
     <!-- 作品介绍 -->
     <el-form-item label="作品介绍">
-      <el-input v-model="form.enrollType" :disabled="true" />
       <el-input type="textarea" v-model="form.Introduction" class="textBox" />
     </el-form-item>
     <!-- 作品类型 -->
