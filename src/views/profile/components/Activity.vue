@@ -8,18 +8,18 @@
     </el-form-item>
     <!-- 用户介绍 -->
     <el-form-item label="用户介绍">
-      <el-input type="textarea" v-model="form.desc" />
+      <el-input v-model="form.desc" type="textarea" />
     </el-form-item>
     <!-- 作品介绍 -->
     <el-form-item label="作品介绍">
-      <el-input type="textarea" v-model="form.Introduction" class="textBox" />
+      <el-input v-model="form.Introduction" type="textarea" class="textBox" />
     </el-form-item>
     <!-- 作品类型 -->
     <el-form-item label="作品类型">
       <el-select v-model="form.opusType" class="filter-item" placeholder="请选择作品类型">
         <el-option v-for="item in opusTypeOptions" :key="item" :label="item.display_name" :value="item" />
       </el-select>
-      <el-input type="textarea" v-model="form.opusTypeCont" class="textBox" />
+      <el-input v-model="form.opusTypeCont" type="textarea" class="textBox" />
     </el-form-item>
     <el-form-item>
       <el-button type="primary" @click="onSubmit">立即创建</el-button>
@@ -75,9 +75,9 @@ export default {
   position: relative;
 }
 /* 输入框宽度 */
-.el-input {
+/* .el-input {
     width: 230px;
-}
+} */
 /* 上传图片样式 */
 .avatar-uploader .el-upload {
     border: 1px dashed #d9d9d9;

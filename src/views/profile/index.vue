@@ -16,7 +16,7 @@
               <el-tab-pane label="我的作品" name="timeline">
                 <timeline />
               </el-tab-pane>
-              <el-tab-pane label="demo" name="account">
+              <el-tab-pane label="重置密码" name="account">
                 <account :user="user" />
               </el-tab-pane>
             </el-tabs>

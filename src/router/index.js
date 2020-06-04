@@ -356,12 +356,6 @@ export const asyncRoutes = [
         component: () => import('@/views/profile/index'),
         name: '个人中心',
         meta: { title: '个人中心', noCache: true }
-      },
-      {
-        path: 'setting',
-        component: () => import('@/views/profile/settings/index'),
-        name: '个人设置',
-        meta: { title: '个人设置', noCache: true }
       }
     ]
   },
