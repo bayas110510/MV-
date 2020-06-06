@@ -357,6 +357,13 @@ export const asyncRoutes = [
         name: '个人中心',
         meta: { title: '个人中心', noCache: true }
       }
+      // {
+      //   path: 'Timeline',
+      //   hidden: true,
+      //   component: () => import('@/views/profile/components/Timeline'),
+      //   name: '我的作品',
+      //   meta: { title: '我的作品', noCache: true }
+      // }
     ]
   },
   {
