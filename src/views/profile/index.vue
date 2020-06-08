@@ -16,8 +16,15 @@
               <el-tab-pane label="我的作品" name="timeline">
                 <timeline />
               </el-tab-pane>
+              <el-tab-pane label="基本资料" name="Information">
+                <Information />
+              </el-tab-pane>
               <el-tab-pane label="重置密码" name="account">
                 <account :user="user" />
+              </el-tab-pane>
+              <!-- demo -->
+              <el-tab-pane label="demo" name="demo">
+                <demo />
               </el-tab-pane>
             </el-tabs>
           </el-card>
@@ -34,10 +41,12 @@ import UserCard from './components/UserCard'
 import Activity from './components/Activity'
 import Timeline from './components/Timeline'
 import Account from './components/Account'
+import Information from './components/Information'
+import demo from './components/demo'
 
 export default {
   name: 'Profile',
-  components: { UserCard, Activity, Timeline, Account },
+  components: { UserCard, Activity, Timeline, Account, Information, demo },
   data() {
     return {
       user: {},

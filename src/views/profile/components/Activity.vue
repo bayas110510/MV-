@@ -40,7 +40,7 @@
 </template>
 <script>
 // import Timeline from '/Timeline'
-// import Bus from 'bus.js'
+import bus from './bus'
 export default {
   // components: { Timeline },
   data() {
@@ -57,6 +57,7 @@ export default {
         opusName: '',
         // 作品介绍
         Introduction: '',
+        // 作品上传
         upload: ''
       },
       //  报名类型
@@ -67,18 +68,10 @@ export default {
   },
   methods: {
     // 添加按钮
-    onSubmit(form) {
-      console.log('submit!')
-      // this.$router.push('/Timeline')
-      // this.form.
-      // this.$router.push({
-      //   path: './Timeline',
-      //   query: {
-      //     id: this.form
-      //   }
-      // })
-
-      console.log('提交成功')
+    onSubmit() {
+      bus.$emit('userDefinedEvent', this.form)
+      console.log(this.form)
+      this.form = {}
     },
     reset(form) {
       this.$refs[form].resetFields() // 将form表单重置

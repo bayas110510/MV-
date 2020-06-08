@@ -40,7 +40,7 @@
               <i class="el-icon-chat-dot-square" />
               <span>介绍: </span>{{ item.profiles }}
             </p>
-            <el-button style="float: right; padding: 3px 0" type="text" @click="change()">修改按钮</el-button>
+            <el-button style="float: right; padding: 3px 0" type="text" @click="change()">修改</el-button>
           </div>
         </div>
         <el-divider />
